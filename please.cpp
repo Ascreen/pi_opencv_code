@@ -178,6 +178,7 @@ int main()
 		if (image.empty()) break;
 	//video.read(image);
 
+		resize(image, reduced, Size(0, 0), 0.5, 0.5);
         tmpImg = GetSkin(image);
 
 		cvtColor(tmpImg, handImg, CV_BGR2YCrCb);
