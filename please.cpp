@@ -23,7 +23,7 @@ using std::cout;
 using std::endl;
 
 bool R1(int R, int G, int B) {
-	//e1 Í∞?: ?∏Î???minÍ∞íÏùÑ ?íÏûÑ
+	//e1 Â™õ?: ?Î™É???minÂ™õ¬í¬ù¬Ñ ?¬í¬û¬Ñ
 	/*
     bool e1 = (R>130) && (G>130) && (B>20) && ((max(R,max(G,B)) - min(R, min(G,B)))>15) && (abs(R-G)>15) && (R>G) && (R>B);
     bool e2 = (R>220) && (G>210) && (B>170) && (abs(R-G)<=15) && (R>B) && (G>B);
@@ -103,7 +103,7 @@ Mat GetSkin(Mat const &src) {
 
 Point2f clickPoint = Point2f(0.0,0.0); //BLUE circle point
 
-int frameUnit=3, frameUnitMid=1;  // 3 frames ¥‹¿ß  +-3.5 ø¿¬˜π¸¿ß
+int frameUnit=3, frameUnitMid=1;  // 3 frames Îã®ÏúÑ  +-3.5 Ïò§Ï∞®Î≤îÏúÑ
 float errorRange= 3.5;
 
 int comparePoints(std::vector<Point2f> points){
@@ -145,12 +145,12 @@ int main()
 	std::vector<Point2f> points;
 
 
-	/*
+	
 	VideoCapture video(0);
 	if (!video.isOpened()) return 0;
-	*/
-    //VideoCapture video("C:/Users/macbook/Desktop/record3/new_ul01.h264"); //dl005 dr002bigerror dr005error ªÁ∞¢«¸ ªÁ¿Ã¡Ó π¸¿ß∏¶ ¡§«œ¥¬∞‘ ¡¡¿ªµÌ
-	VideoCapture video("new_dr00.h264");
+	
+    //VideoCapture video("C:/Users/macbook/Desktop/record3/new_ul01.h264"); //dl005 dr002bigerror dr005error ÏÇ¨Í∞ÅÌòï ÏÇ¨Ïù¥Ï¶à Î≤îÏúÑÎ•º Ï†ïÌïòÎäîÍ≤å Ï¢ãÏùÑÎìØ
+	//VideoCapture video("new_dr00.h264");
     Mat image;
 
 
@@ -162,11 +162,10 @@ int main()
 
 	while (true)
 	{
-	    /*
+	    
 	    video >> image;
 		if (image.empty()) break;
-		*/
-		video.read(image);
+	//video.read(image);
 
         tmpImg = GetSkin(image);
 
@@ -185,25 +184,25 @@ int main()
 			}
 		}
 
-		drawContours(image, contours, largestContour, Scalar(0, 255, 255), -1, 8, std::vector <Vec4i>(), 0, Point());	//YELLOW contour Í∑∏Î¶¨Í∏?
+		drawContours(image, contours, largestContour, Scalar(0, 255, 255), -1, 8, std::vector <Vec4i>(), 0, Point());	//YELLOW contour Ê¥πÎ™É‚îÅÊπ≤?
         //5th index must be -1 for drawing only one contour from present Contours variable)
 
 
         // loop through the contours/hierarchy
         for (int i=0; i<contours.size(); i++) {
-            if(i==largestContour){  //º±≈√µ» ¿±∞˚º±∏∏ blue ªÁ∞¢«¸ ±◊∏Æ±‚
+            if(i==largestContour){  //ÏÑ†ÌÉùÎêú Ïú§Í≥ΩÏÑ†Îßå blue ÏÇ¨Í∞ÅÌòï Í∑∏Î¶¨Í∏∞
                 if (hierarchy[i][3]==-1 && arcLength(contours[i], true)!=arcLength(contours[i], false)) {
                     std::vector<std::vector<Point> >hull(1);
                     convexHull(Mat(contours[i]), hull[0], false);
-                    drawContours(image, hull, 0, Scalar(0, 255, 0), 1, 8, std::vector<Vec4i>(), 0, Point());		//GREEN ¡° ¿’±‚
+                    drawContours(image, hull, 0, Scalar(0, 255, 0), 1, 8, std::vector<Vec4i>(), 0, Point());		//GREEN Ï†ê ÏûáÍ∏∞
                     if(1){
                         std::vector<RotatedRect> minRect( contours.size() );
                         minRect[i] = minAreaRect( Mat(contours[i]) );
                         Point2f rect_points[4];
                         minRect[i].points( rect_points );
                         for( int j = 0; j < 4; j++ )
-                            line( image, rect_points[j], rect_points[(j+1)%4], Scalar(255, 0, 0), 1, 8 );   //BLUE ªÁ∞¢«¸ ±◊∏Æ±‚
-                        std::cout<<rect_points[2]<<std::endl;          //point ¡¬«• ∞™ print«œ±‚
+                            line( image, rect_points[j], rect_points[(j+1)%4], Scalar(255, 0, 0), 1, 8 );   //BLUE ÏÇ¨Í∞ÅÌòï Í∑∏Î¶¨Í∏∞
+                        std::cout<<rect_points[2]<<std::endl;          //point Ï¢åÌëú Í∞í printÌïòÍ∏∞
 
                         points.push_back(Point2f(rect_points[2].x,rect_points[2].y));
                         if(comparePoints(points)){
