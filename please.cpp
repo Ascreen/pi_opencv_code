@@ -17,6 +17,9 @@
 #include "opencv2/opencv.hpp"
 #include <cstring>
 
+#include <iostream>
+#include <ctime>
+
 using namespace cv;
 
 using std::cout;
@@ -29,7 +32,7 @@ bool R1(int R, int G, int B) {
     bool e2 = (R>220) && (G>210) && (B>170) && (abs(R-G)<=15) && (R>B) && (G>B);
     */
 
-    bool e1 = (R>80) && (G>80) && (B>10) && ((max(R,max(G,B)) - min(R, min(G,B)))>15) && (abs(R-G)>15) && (R>G) && (R>B);
+    bool e1 = (R>100) && (G>100) && (B>10) && ((max(R,max(G,B)) - min(R, min(G,B)))>15) && (abs(R-G)>15) && (R>G) && (R>B);
     bool e2 = (R>220) && (G>210) && (B>170) && (abs(R-G)<=15) && (R>B) && (G>B);
 
 
@@ -107,6 +110,13 @@ int frameUnit=3, frameUnitMid=1;  // 3 frames 단위  +-3.5 오차범위
 float errorRange= 3.5;
 
 int comparePoints(std::vector<Point2f> points){
+	time_t curr_time;
+    struct tm *curr_tm;
+    curr_time = time(NULL);
+    curr_tm = localtime(&curr_time);
+
+	
+	
     std::vector<Point2f> differ;
     if(points.size()==frameUnit){
         for(int i=0; i<(frameUnit-1); i++){
@@ -125,6 +135,7 @@ int comparePoints(std::vector<Point2f> points){
             if(0.0<=differY && differY<=errorRange){
                 clickPoint = points[frameUnitMid];
                 std::cout<<"***********"<<std::endl;
+		std::cout << curr_tm->tm_hour << ": " << curr_tm->tm_min << ": " << curr_tm->tm_sec << "." << endl << endl;
                 std::cout<<points[frameUnitMid]<<std::endl;
                 std::cout<<"***********"<<std::endl;
             }
@@ -202,7 +213,7 @@ int main()
                         minRect[i].points( rect_points );
                         for( int j = 0; j < 4; j++ )
                             line( image, rect_points[j], rect_points[(j+1)%4], Scalar(255, 0, 0), 1, 8 );   //BLUE 사각형 그리기
-                        std::cout<<rect_points[2]<<std::endl;          //point 좌표 값 print하기
+                        //std::cout<<rect_points[2]<<std::endl;          //point 좌표 값 print하기
 
                         points.push_back(Point2f(rect_points[2].x,rect_points[2].y));
                         if(comparePoints(points)){
