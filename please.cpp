@@ -20,13 +20,20 @@
 #include <iostream>
 #include <ctime>
 
+#include <fstream>
+
+
+////////RGB-H-CbCr + YCrCb color model SKIN DETECTION & FINGER CONTOUR.v2
+
+
 using namespace cv;
 
 using std::cout;
 using std::endl;
 
+std::ofstream inf("text.txt");
+
 bool R1(int R, int G, int B) {
-	//e1 媛?: ?몃???min媛 ?
 	/*
     bool e1 = (R>130) && (G>130) && (B>20) && ((max(R,max(G,B)) - min(R, min(G,B)))>15) && (abs(R-G)>15) && (R>G) && (R>B);
     bool e2 = (R>220) && (G>210) && (B>170) && (abs(R-G)<=15) && (R>B) && (G>B);
@@ -115,8 +122,8 @@ int comparePoints(std::vector<Point2f> points){
     curr_time = time(NULL);
     curr_tm = localtime(&curr_time);
 
-	
-	
+
+
     std::vector<Point2f> differ;
     if(points.size()==frameUnit){
         for(int i=0; i<(frameUnit-1); i++){
@@ -134,10 +141,17 @@ int comparePoints(std::vector<Point2f> points){
         if(0.0<=differX && differX<errorRange){
             if(0.0<=differY && differY<=errorRange){
                 clickPoint = points[frameUnitMid];
-                std::cout<<"***********"<<std::endl;
-		std::cout << curr_tm->tm_hour << ": " << curr_tm->tm_min << ": " << curr_tm->tm_sec << "." << endl << endl;
+                std::cout << curr_tm->tm_hour << ":" << curr_tm->tm_min << ":" << curr_tm->tm_sec << endl << endl;
                 std::cout<<points[frameUnitMid]<<std::endl;
                 std::cout<<"***********"<<std::endl;
+
+                inf<<curr_tm->tm_hour;
+                inf<<":";
+                inf<<curr_tm->tm_min;
+                inf<<":";
+                inf<<curr_tm->tm_sec<<std::endl;
+                inf<<points[frameUnitMid]<<std::endl;
+                inf<<"***********"<<std::endl;
             }
         }
         differ.clear();
@@ -150,16 +164,18 @@ int comparePoints(std::vector<Point2f> points){
 
 int main()
 {
+
+
 	Mat tmpImg, handImg, mask;
 	std::vector<std::vector<Point> > contours;
 	std::vector<Vec4i> hierarchy;
 	std::vector<Point2f> points;
 
 
-	
+
 	VideoCapture video(0);
 	if (!video.isOpened()) return 0;
-	
+
     //VideoCapture video("C:/Users/macbook/Desktop/record3/new_ul01.h264"); //dl005 dr002bigerror dr005error 사각형 사이즈 범위를 정하는게 좋을듯
 	//VideoCapture video("new_dr00.h264");
     Mat image;
@@ -173,13 +189,12 @@ int main()
 
 	while (true)
 	{
-	    
+
 	    video >> image;
 		if (image.empty()) break;
 	//video.read(image);
-	
-	image = cv2.resize(image, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_AREA)
-		
+
+
         tmpImg = GetSkin(image);
 
 		cvtColor(tmpImg, handImg, CV_BGR2YCrCb);
@@ -197,7 +212,7 @@ int main()
 			}
 		}
 
-		drawContours(image, contours, largestContour, Scalar(0, 255, 255), -1, 8, std::vector <Vec4i>(), 0, Point());	//YELLOW contour 洹몃━湲?
+		drawContours(image, contours, largestContour, Scalar(0, 255, 255), 1, 8, std::vector <Vec4i>(), 0, Point());	//YELLOW contour 洹몃━湲?
         //5th index must be -1 for drawing only one contour from present Contours variable)
 
 
@@ -249,6 +264,8 @@ int main()
     image.release();
 
 	destroyAllWindows();
+
+	inf.close();
 
 	return 0;
 }
