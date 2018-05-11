@@ -32,6 +32,7 @@ using std::cout;
 using std::endl;
 
 std::ofstream inf("text.txt");
+int piNum=1;
 
 bool R1(int R, int G, int B) {
 	/*
@@ -145,13 +146,15 @@ int comparePoints(std::vector<Point2f> points){
                 std::cout<<points[frameUnitMid]<<std::endl;
                 std::cout<<"***********"<<std::endl;
 
+                inf<<piNum;
+                inf<<"/";
                 inf<<curr_tm->tm_hour;
-                inf<<":";
                 inf<<curr_tm->tm_min;
-                inf<<":";
-                inf<<curr_tm->tm_sec<<std::endl;
-                inf<<points[frameUnitMid]<<std::endl;
-                inf<<"***********"<<std::endl;
+                inf<<curr_tm->tm_sec;
+                inf<<"/";
+                inf<<points[frameUnitMid].x;
+                inf<<"/";
+                inf<<points[frameUnitMid].y<<std::endl;
             }
         }
         differ.clear();
