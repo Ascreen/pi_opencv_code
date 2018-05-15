@@ -198,7 +198,7 @@ int main()
 	//video.read(image);
 
 
-		image = image(Rect(0,0,160,90));
+		image = image(Rect(100,100,510,220));
 		
 		
         tmpImg = GetSkin(image);
