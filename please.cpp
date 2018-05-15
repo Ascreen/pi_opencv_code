@@ -198,6 +198,9 @@ int main()
 	//video.read(image);
 
 
+		image = image(Rect(0,0,160,90));
+		
+		
         tmpImg = GetSkin(image);
 
 		cvtColor(tmpImg, handImg, CV_BGR2YCrCb);
