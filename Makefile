@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall -pthread
-SRCS = please2.cpp
+SRCS = tcp2.cpp
 PROG = $(notdir $(CURDIR))
 
 OPENCV = `pkg-config opencv --cflags --libs`

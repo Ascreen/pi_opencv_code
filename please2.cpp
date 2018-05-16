@@ -32,6 +32,7 @@
 #include <ctype.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <unistd.h>
 
 #include <thread>
 #include <chrono>
@@ -49,6 +50,7 @@ using std::cout;
 using std::endl;
 
 std::ofstream inf("text.txt");
+
 int piNum=1;
 
 void tcp(){
@@ -79,7 +81,7 @@ void tcp(){
         fprintf(stderr, "ERROR: Failed to connect to the host! (errno = %d)\n",errno);
         exit(1);
     }
-    else
+    else {
         printf("[Client] Connected to server at port %d...ok!\n", PORT);
 
         char* fs_name = "text.txt";
@@ -104,9 +106,9 @@ void tcp(){
             bzero(sdbuf, LENGTH);
         }
         printf("Ok File %s from Client was Sent!\n", fs_name);
-   
+   }
     
-    //close(sockfd);
+    close(sockfd);
     
     printf("[Client] Connection lost.\n");
 }
@@ -214,6 +216,8 @@ int comparePoints(std::vector<Point2f> points){
         }
         differX = differX/(frameUnit-1);
         differY = differY/(frameUnit-1);
+        
+        
 
         if(0.0<=differX && differX<errorRange){
             if(0.0<=differY && differY<=errorRange){
@@ -234,19 +238,16 @@ int comparePoints(std::vector<Point2f> points){
             }
         }
         differ.clear();
+        
+
         return 1;
     } else
         return 0;
+        
 }
 
 
-
-int main()
-{
-	
-	std::thread thread1(tcp);
-	thread1.join();
-
+int opencv(){
 	Mat tmpImg, handImg, mask;
 	std::vector<std::vector<Point> > contours;
 	std::vector<Vec4i> hierarchy;
@@ -319,6 +320,7 @@ int main()
                                 clickPoint = Point2f(0.0,0.0);
                             }
                             points.clear();
+                            inf.close();
                         }
                     }
                 }
@@ -345,8 +347,18 @@ int main()
     image.release();
 
 	destroyAllWindows();
+}
 
-	inf.close();
 
+int main()
+{
+	
+	std::thread thread1(opencv);
+	std::thread thread2(tcp);
+	thread1.join();
+	thread2.join();
+
+	
+	
 	return 0;
 }
