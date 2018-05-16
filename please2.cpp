@@ -52,7 +52,7 @@ std::ofstream inf("text.txt");
 int piNum=1;
 
 void tcp(){
-    std::this_thread::sleap_for(std::chrono::duration<int>(10));
+    std::this_thread::sleep_for(std::chrono::duration<int>(10));
 
     /* Variable Definition */
     int sockfd;
@@ -104,8 +104,10 @@ void tcp(){
             bzero(sdbuf, LENGTH);
         }
         printf("Ok File %s from Client was Sent!\n", fs_name);
-
-    close (sockfd);
+   
+    
+    //close(sockfd);
+    
     printf("[Client] Connection lost.\n");
 }
 
@@ -241,6 +243,9 @@ int comparePoints(std::vector<Point2f> points){
 
 int main()
 {
+	
+	std::thread thread1(tcp);
+	thread1.join();
 
 	Mat tmpImg, handImg, mask;
 	std::vector<std::vector<Point> > contours;
@@ -332,9 +337,6 @@ int main()
 		if (waitKey(10)>0)
 			break;
 	}
-
-	std::thread thread1(tcp);
-	thread1.join();
 
 
 	video.release();
