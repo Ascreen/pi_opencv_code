@@ -150,7 +150,9 @@ int comparePoints(std::vector<Point2f> points){
                 inf<<piNum;
                 inf<<"/";
                 inf<<curr_tm->tm_hour;
+                inf<<"/";
                 inf<<curr_tm->tm_min;
+                inf<<"/";
                 inf<<curr_tm->tm_sec;
                 inf<<"/";
                 inf<<points[frameUnitMid].x;
@@ -201,7 +203,7 @@ int main()
 
 		image = image(Rect(100,100,510,210));
 		imwrite("image2.jpg",image);
-		
+
         tmpImg = GetSkin(image);
 
 		cvtColor(tmpImg, handImg, CV_BGR2YCrCb);
