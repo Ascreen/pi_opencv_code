@@ -33,7 +33,7 @@ using std::cout;
 using std::endl;
 
 std::ofstream inf("text.txt");
-int piNum=1;
+int piNum=2;
 
 bool R1(int R, int G, int B) {
 	/*
@@ -199,8 +199,8 @@ int main()
 	//video.read(image);
 
 
-		image = image(Rect(100,100,510,220));
-		
+		image = image(Rect(100,100,510,210));
+		imwrite("image2.jpg",image);
 		
         tmpImg = GetSkin(image);
 
@@ -253,7 +253,7 @@ int main()
         }
 
         //Size(960,540) , Size(800,450) , Size(720,405)
-		resize(image, image, Size(960,540), 0, 0, CV_INTER_LINEAR);
+		//resize(image, image, Size(960,540), 0, 0, CV_INTER_LINEAR);
 		resize(tmpImg, tmpImg, Size(720,405), 0, 0, CV_INTER_LINEAR);
         resize(handImg, handImg, Size(720,405), 0, 0, CV_INTER_LINEAR);
 
