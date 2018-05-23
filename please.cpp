@@ -51,6 +51,7 @@ using std::endl;
 
 std::ofstream inf("text.txt");
 int piNum=2;
+char* imageName = "image2.jpg";
 char* ipAddress = "192.168.0.66";
 int bright = 10;
 
@@ -294,7 +295,7 @@ int main()
 
 
 		image = image(Rect(100,100,510,210));
-		imwrite("image2.jpg",image);
+		imwrite(imageName, image);
 		
 		image = image + Scalar(bright, bright, bright);
 
