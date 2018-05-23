@@ -23,6 +23,23 @@
 
 #include <fstream>
 
+#include <errno.h>
+#include <string.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/wait.h>
+#include <sys/socket.h>
+#include <signal.h>
+#include <ctype.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <unistd.h>
+
+#include <thread>
+#include <chrono>
+#define PORT 20000
+#define LENGTH 5000
+
 
 ////////RGB-H-CbCr + YCrCb color model SKIN DETECTION & FINGER CONTOUR.v2
 
@@ -34,6 +51,70 @@ using std::endl;
 
 std::ofstream inf("text.txt");
 int piNum=2;
+char* ipAddress = "192.168.0.66";
+int bright = 10;
+
+
+
+void tcp(){
+
+    /* Variable Definition */
+    int sockfd;
+    int nsockfd;
+    char revbuf[LENGTH];
+    struct sockaddr_in remote_addr;
+
+    /* Get the Socket file descriptor */
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+    {
+        fprintf(stderr, "ERROR: Failed to obtain Socket Descriptor! (errno = %d)\n",errno);
+        exit(1);
+    }
+
+    /* Fill the socket address struct */
+    remote_addr.sin_family = AF_INET;
+    remote_addr.sin_port = htons(PORT);
+    inet_pton(AF_INET, ipAddress, &remote_addr.sin_addr);
+    bzero(&(remote_addr.sin_zero), 8);
+
+    /* Try to connect the remote */
+    if (connect(sockfd, (struct sockaddr *)&remote_addr, sizeof(struct sockaddr)) == -1)
+    {
+        fprintf(stderr, "ERROR: Failed to connect to the host! (errno = %d)\n",errno);
+        exit(1);
+    }
+    else {
+        printf("[Client] Connected to server at port %d...ok!\n", PORT);
+
+        char* fs_name = "text.txt";
+        char sdbuf[LENGTH];
+        printf("[Client] Sending %s to the Server... ", fs_name);
+        FILE *fs = fopen(fs_name, "r");
+        if(fs == NULL)
+        {
+            printf("ERROR: File %s not found.\n", fs_name);
+            exit(1);
+        }
+
+        bzero(sdbuf, LENGTH);
+        int fs_block_sz;
+        while((fs_block_sz = fread(sdbuf, sizeof(char), LENGTH, fs)) > 0)
+        {
+            if(send(sockfd, sdbuf, fs_block_sz, 0) < 0)
+            {
+                fprintf(stderr, "ERROR: Failed to send file %s. (errno = %d)\n", fs_name, errno);
+                break;
+            }
+            bzero(sdbuf, LENGTH);
+        }
+        printf("Ok File %s from Client was Sent!\n", fs_name);
+   }
+    
+    close(sockfd);
+    
+    printf("[Client] Connection lost.\n");
+}
+
 
 bool R1(int R, int G, int B) {
 	/*
@@ -41,7 +122,7 @@ bool R1(int R, int G, int B) {
     bool e2 = (R>220) && (G>210) && (B>170) && (abs(R-G)<=15) && (R>B) && (G>B);
     */
 
-    bool e1 = (R>130) && (G>130) && (B>20) && ((max(R,max(G,B)) - min(R, min(G,B)))>15) && (abs(R-G)>15) && (R>G) && (R>B);
+    bool e1 = (R>100) && (G>100) && (B>10) && ((max(R,max(G,B)) - min(R, min(G,B)))>15) && (abs(R-G)>15) && (R>G) && (R>B);
     bool e2 = (R>220) && (G>210) && (B>170) && (abs(R-G)<=15) && (R>B) && (G>B);
 
 
@@ -191,10 +272,21 @@ int main()
     namedWindow("hand1_image", CV_WINDOW_AUTOSIZE);
 	namedWindow("hand2_image", CV_WINDOW_AUTOSIZE);
 	namedWindow("original_image", CV_WINDOW_AUTOSIZE);
+	
+	int frameCnt = 0;
 
 
 	while (true)
 	{
+		frameCnt++;
+		if(frameCnt==70){
+			inf.close();
+			
+			tcp();
+			
+			inf.open("text.txt");
+			frameCnt=0;
+		}
 
 	    video >> image;
 		if (image.empty()) break;
@@ -203,8 +295,11 @@ int main()
 
 		image = image(Rect(100,100,510,210));
 		imwrite("image2.jpg",image);
+		
+		image = image + Scalar(bright, bright, bright);
 
         tmpImg = GetSkin(image);
+        //tmpImg = image;
 
 		cvtColor(tmpImg, handImg, CV_BGR2YCrCb);
 		inRange(handImg, Scalar(0, 133, 77), Scalar(255, 173, 127), handImg);

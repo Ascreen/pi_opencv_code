@@ -26,7 +26,7 @@
 #include <thread>
 #include <chrono>
 #define PORT 20000
-#define LENGTH 512
+#define LENGTH 5000
 
 
 ////////RGB-H-CbCr + YCrCb color model SKIN DETECTION & FINGER CONTOUR.v2
@@ -99,9 +99,9 @@ int main()
 {
 	
 	while(true){
-		
 		sleep(10);
-		tcp();
+		tcp();		
+		
 	}
 
 	return 0;
