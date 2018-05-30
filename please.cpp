@@ -54,8 +54,6 @@ int piNum=2;
 char* imageName = "image2.jpg";
 char* ipAddress = "192.168.0.66";
 int bright = 10;
-int startMinute = 24;
-
 
 void tcp(){
 
@@ -261,6 +259,13 @@ int main()
 	
 	time_t curr_time;
     	struct tm *curr_tm;
+    	int startMinute = 0;
+
+    	std::cout << "Enter bright(int):";
+    	std::cin >> bright;
+
+    	std::cout << "Enter start minute(0~59):";
+    	std::cin >> startMinute;
 
     	while(1){
         	curr_time = time(NULL);
@@ -269,7 +274,6 @@ int main()
             		break;
         	}
     	}
-
 
 
 
