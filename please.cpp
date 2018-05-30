@@ -54,7 +54,7 @@ int piNum=2;
 char* imageName = "image2.jpg";
 char* ipAddress = "192.168.0.66";
 int bright = 10;
-
+int startMinute = 24;
 
 
 void tcp(){
@@ -225,9 +225,8 @@ int comparePoints(std::vector<Point2f> points){
         if(0.0<=differX && differX<errorRange){
             if(0.0<=differY && differY<=errorRange){
                 clickPoint = points[frameUnitMid];
-                std::cout << curr_tm->tm_hour << ":" << curr_tm->tm_min << ":" << curr_tm->tm_sec << endl << endl;
-                std::cout<<points[frameUnitMid]<<std::endl;
-                std::cout<<"***********"<<std::endl;
+                std::cout << piNum << "/" << curr_tm->tm_hour << "/" << curr_tm->tm_min << "/" << curr_tm->tm_sec << "/" << points[frameUnitMid].x << "/" << points[frameUnitMid].y << endl;
+
 
                 inf<<piNum;
                 inf<<"/";
@@ -258,6 +257,19 @@ int main()
 	std::vector<std::vector<Point> > contours;
 	std::vector<Vec4i> hierarchy;
 	std::vector<Point2f> points;
+	
+	
+	time_t curr_time;
+    	struct tm *curr_tm;
+
+    	while(1){
+        	curr_time = time(NULL);
+        	curr_tm = localtime(&curr_time);
+        	if(curr_tm->tm_min==startMinute){
+            		break;
+        	}
+    	}
+
 
 
 
