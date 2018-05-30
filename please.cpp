@@ -270,8 +270,8 @@ int main()
 
 
 
-    namedWindow("hand1_image", CV_WINDOW_AUTOSIZE);
-	namedWindow("hand2_image", CV_WINDOW_AUTOSIZE);
+    //namedWindow("hand1_image", CV_WINDOW_AUTOSIZE);
+	//namedWindow("hand2_image", CV_WINDOW_AUTOSIZE);
 	namedWindow("original_image", CV_WINDOW_AUTOSIZE);
 	
 	int frameCnt = 0;
@@ -352,11 +352,11 @@ int main()
 
         //Size(960,540) , Size(800,450) , Size(720,405)
 		//resize(image, image, Size(960,540), 0, 0, CV_INTER_LINEAR);
-		resize(tmpImg, tmpImg, Size(720,405), 0, 0, CV_INTER_LINEAR);
-        resize(handImg, handImg, Size(720,405), 0, 0, CV_INTER_LINEAR);
+		//resize(tmpImg, tmpImg, Size(720,405), 0, 0, CV_INTER_LINEAR);
+        //resize(handImg, handImg, Size(720,405), 0, 0, CV_INTER_LINEAR);
 
-		imshow("hand1_image", tmpImg);
-		imshow("hand2_image", handImg);
+		//imshow("hand1_image", tmpImg);
+		//imshow("hand2_image", handImg);
 		imshow("original_image", image);
 
 		if (waitKey(10)>0)
