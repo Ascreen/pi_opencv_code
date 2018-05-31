@@ -54,6 +54,7 @@ int piNum=2;
 char* imageName = "image2.jpg";
 char* ipAddress = "192.168.0.66";
 int bright = 10;
+int timelimit = 70;
 
 void tcp(){
 
@@ -264,7 +265,10 @@ int main()
     	std::cout << "Enter bright(int):";
     	std::cin >> bright;
 
-    	std::cout << "Enter start minute(0~59):";
+    	std::cout << "Enter time limit(70==10sec):";
+    	std::cin >> timelimit;
+	
+	std::cout << "Enter start minute(0~59):";
     	std::cin >> startMinute;
 
     	while(1){
@@ -296,7 +300,7 @@ int main()
 	while (true)
 	{
 		frameCnt++;
-		if(frameCnt==70){
+		if(frameCnt==timelimit){
 			inf.close();
 			
 			tcp();
