@@ -54,7 +54,75 @@ int piNum=2;
 char* imageName = "image2.jpg";
 char* ipAddress = "192.168.0.66";
 int bright = 10;
-int timelimit = 70;
+
+int checking=0;
+int secCheck5(int currSec){
+    if(currSec==0){
+        checking++;
+        return checking;
+    }else if (currSec==5){
+        checking++;
+        return checking;
+    } else if(currSec==10){
+        checking++;
+        return checking;
+    }else if (currSec==15){
+        checking++;
+        return checking;
+    } else if(currSec==20){
+        checking++;
+        return checking;
+    }else if (currSec==25){
+        checking++;
+        return checking;
+    }else if (currSec==30){
+        checking++;
+        return checking;
+    } else if(currSec==35){
+        checking++;
+        return checking;
+    }else if (currSec==40){
+        checking++;
+        return checking;
+    } else if(currSec==45){
+        checking++;
+        return checking;
+    }else if (currSec==50){
+        checking++;
+        return checking;
+    }else if (currSec==55){
+        checking++;
+        return checking;
+    } else {
+        checking=0;
+        return checking;
+    }
+}
+
+int secCheck10(int currSec){
+    if(currSec==0){
+        checking++;
+        return checking;
+    }else if (currSec==10){
+        checking++;
+        return checking;
+    } else if(currSec==20){
+        checking++;
+        return checking;
+    }else if (currSec==30){
+        checking++;
+        return checking;
+    } else if(currSec==40){
+        checking++;
+        return checking;
+    }else if (currSec==50){
+        checking++;
+        return checking;
+    } else {
+        checking=0;
+        return checking;
+    }
+}
 
 void tcp(){
 
@@ -258,15 +326,12 @@ int main()
 	std::vector<Point2f> points;
 	
 	
-	time_t curr_time;
-    	struct tm *curr_tm;
+	time_t curr_time, curr_time2;
+    	struct tm *curr_tm, *curr_tm2;
     	int startMinute = 0;
 
     	std::cout << "Enter bright(int):";
     	std::cin >> bright;
-
-    	std::cout << "Enter time limit(70==10sec):";
-    	std::cin >> timelimit;
 	
 	std::cout << "Enter start minute(0~59):";
     	std::cin >> startMinute;
@@ -299,17 +364,19 @@ int main()
 
 	while (true)
 	{
-		frameCnt++;
-		if(frameCnt==timelimit){
+		curr_time2 = time(NULL);
+        	curr_tm2 = localtime(&curr_time2);
+
+		if(secCheck5(curr_tm2->tm_sec)==1){
 			inf.close();
-			
+
 			tcp();
-			
+			std::cout << "do tcp() at "<< curr_tm2->tm_sec << "sec" << endl;
+
 			inf.open("text.txt");
-			frameCnt=0;
 		}
 
-	    video >> image;
+	    	video >> image;
 		if (image.empty()) break;
 	//video.read(image);
 
