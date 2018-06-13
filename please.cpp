@@ -289,6 +289,18 @@ int secCheck2(int currSec){
     }
 }
 
+int secCheck1(int currSec){
+    for(int i=0; i<60; i++){
+        if(currSec==i){
+            checking++;
+            return checking;
+        }else{
+            checking=0;
+            return checking;
+        }
+    }
+}
+
 void tcp(){
 
     /* Variable Definition */
