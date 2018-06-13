@@ -290,14 +290,189 @@ int secCheck2(int currSec){
 }
 
 int secCheck1(int currSec){
-    for(int i=0; i<60; i++){
-        if(currSec==i){
-            checking++;
-            return checking;
-        }else{
-            checking=0;
-            return checking;
-        }
+    if(currSec==0){
+        checking++;
+        return checking;
+    }else if (currSec==1){
+        checking++;
+        return checking;
+    }else if(currSec==2){
+        checking++;
+        return checking;
+    }else if (currSec==3){
+        checking++;
+        return checking;
+    }else if (currSec==4){
+        checking++;
+        return checking;
+    }else if(currSec==5){
+        checking++;
+        return checking;
+    }else if (currSec==6){
+        checking++;
+        return checking;
+    }else if (currSec==7){
+        checking++;
+        return checking;
+    }else if(currSec==8){
+        checking++;
+        return checking;
+    }else if (currSec==9){
+        checking++;
+        return checking;
+    }else if(currSec==10){
+        checking++;
+        return checking;
+    }else if (currSec==11){
+        checking++;
+        return checking;
+    }else if (currSec==12){
+        checking++;
+        return checking;
+    }else if (currSec==13){
+        checking++;
+        return checking;
+    }else if(currSec==14){
+        checking++;
+        return checking;
+    }else if (currSec==15){
+        checking++;
+        return checking;
+    }else if(currSec==16){
+        checking++;
+        return checking;
+    }else if (currSec==17){
+        checking++;
+        return checking;
+    }else if (currSec==18){
+        checking++;
+        return checking;
+    }else if(currSec==19){
+        checking++;
+        return checking;
+    }else if (currSec==20){
+        checking++;
+        return checking;
+    }else if(currSec==21){
+        checking++;
+        return checking;
+    }else if (currSec==22){
+        checking++;
+        return checking;
+    }else if (currSec==23){
+        checking++;
+        return checking;
+    }else if(currSec==24){
+        checking++;
+        return checking;
+    }else if (currSec==25){
+        checking++;
+        return checking;
+    }else if(currSec==26){
+        checking++;
+        return checking;
+    }else if (currSec==27){
+        checking++;
+        return checking;
+    }else if (currSec==28){
+        checking++;
+        return checking;
+    }else if(currSec==29){
+        checking++;
+        return checking;
+    }else if (currSec==30){
+        checking++;
+        return checking;
+    }else if(currSec==31){
+        checking++;
+        return checking;
+    }else if (currSec==32){
+        checking++;
+        return checking;
+    }else if (currSec==33){
+        checking++;
+        return checking;
+    }else if(currSec==34){
+        checking++;
+        return checking;
+    }else if (currSec==35){
+        checking++;
+        return checking;
+    }else if (currSec==36){
+        checking++;
+        return checking;
+    }else if(currSec==37){
+        checking++;
+        return checking;
+    }else if (currSec==38){
+        checking++;
+        return checking;
+    }else if(currSec==39){
+        checking++;
+        return checking;
+    }else if (currSec==40){
+        checking++;
+        return checking;
+    }else if (currSec==41){
+        checking++;
+        return checking;
+    }else if (currSec==42){
+        checking++;
+        return checking;
+    }else if(currSec==43){
+        checking++;
+        return checking;
+    }else if (currSec==44){
+        checking++;
+        return checking;
+    }else if(currSec==45){
+        checking++;
+        return checking;
+    }else if (currSec==46){
+        checking++;
+        return checking;
+    }else if (currSec==47){
+        checking++;
+        return checking;
+    }else if(currSec==48){
+        checking++;
+        return checking;
+    }else if (currSec==49){
+        checking++;
+        return checking;
+    }else if(currSec==50){
+        checking++;
+        return checking;
+    }else if (currSec==51){
+        checking++;
+        return checking;
+    }else if (currSec==52){
+        checking++;
+        return checking;
+    }else if(currSec==53){
+        checking++;
+        return checking;
+    }else if (currSec==54){
+        checking++;
+        return checking;
+    }else if(currSec==55){
+        checking++;
+        return checking;
+    }else if (currSec==56){
+        checking++;
+        return checking;
+    }else if (currSec==57){
+        checking++;
+        return checking;
+    }else if(currSec==58){
+        checking++;
+        return checking;
+    }else if (currSec==59){
+        checking++;
+        return checking;
+    }else {
+        checking=0;
+        return checking;
     }
 }
 
