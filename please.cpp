@@ -56,6 +56,38 @@ char* ipAddress = "192.168.0.66";
 int bright = 10;
 
 int checking=0;
+
+int init_brightness = 100;
+int init_contrast = 100;
+
+Mat image;
+
+void updateBrightnessContrast(int, void*)
+{
+	int histSize = 255;
+	int var_brightness = init_brightness - 100;
+	int var_contrast = init_contrast - 100;
+
+	double a, b;
+	if (var_contrast > 0)
+	{
+		double delta = 127.0*var_contrast / 100;
+		a = 255.0 / (255.0 - delta * 2);
+		b = a*(var_brightness - delta);
+	}
+	else
+	{
+		double delta = -128.0*var_contrast / 100;
+		a = (256.0 - delta * 2) / 255.0;
+		b = a*var_brightness + delta;
+	}
+
+	image.convertTo(image, CV_8U, a, b);
+	imshow("original_image", image);
+
+}
+
+
 int secCheck5(int currSec){
     if(currSec==0){
         checking++;
@@ -517,7 +549,7 @@ int main()
 
     //VideoCapture video("C:/Users/macbook/Desktop/record3/new_ul01.h264"); //dl005 dr002bigerror dr005error 사각형 사이즈 범위를 정하는게 좋을듯
 	//VideoCapture video("new_dr00.h264");
-    Mat image;
+    //Mat image;
 
 
 
@@ -548,6 +580,8 @@ int main()
 		imwrite(imageName, image);
 		
 		image = image + Scalar(bright, bright, bright);
+		
+		updateBrightnessContrast(0, 0);
 
         tmpImg = GetSkin(image);
         //tmpImg = image;
@@ -608,6 +642,10 @@ int main()
 		//imshow("hand1_image", tmpImg);
 		//imshow("hand2_image", handImg);
 		imshow("original_image", image);
+		createTrackbar("brightness", "original_image", &init_brightness, 200, updateBrightnessContrast);
+        	createTrackbar("contrast", "original_image", &init_contrast, 200, updateBrightnessContrast);
+
+        	updateBrightnessContrast(0, 0);
 
 		if (waitKey(10)>0)
 			break;
