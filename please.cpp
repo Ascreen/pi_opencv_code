@@ -562,7 +562,9 @@ int main()
 		curr_time2 = time(NULL);
         	curr_tm2 = localtime(&curr_time2);
 
-		if(secCheck5(curr_tm2->tm_sec)==1){
+		if(secCheck3(curr_tm2->tm_sec)==1){
+			inf<<piNum;
+                	inf<<"/0/0/0/0/0"<<std::endl;
 			inf.close();
 
 			tcp();
